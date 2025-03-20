@@ -21,7 +21,10 @@ import {
   ArrowUpRight,
   SlidersHorizontal,
   Eye,
-  FileArchive
+  FileArchive,
+  Building,
+  UserCircle,
+  Database
 } from "lucide-react";
 import AnimatedCard from "./AnimatedCard";
 
@@ -43,6 +46,7 @@ const FileStorageInterface = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [selectedFile, setSelectedFile] = useState<FileItem | null>(null);
+  const [activeSection, setActiveSection] = useState<"personal" | "shared" | "department">("shared");
   
   const breadcrumbs = ["Trang chủ", currentFolder];
 
@@ -162,12 +166,53 @@ const FileStorageInterface = () => {
         <div className="space-y-6">
           <div className="flex items-center space-x-2">
             <div className="w-8 h-8 rounded-full bg-gradient-to-br from-primary to-primary/80 flex items-center justify-center shadow-md">
-              <File className="h-4 w-4 text-white" />
+              <Database className="h-4 w-4 text-white" />
             </div>
             <h2 className="text-lg font-bold">Kho lưu trữ</h2>
           </div>
           
+          {/* Phần kho dữ liệu mới */}
+          <div className="space-y-2">
+            <h3 className="text-xs font-medium uppercase text-muted-foreground tracking-wider px-2">Kho dữ liệu chung</h3>
+            <div className="space-y-1">
+              <AnimatedCard
+                className={`px-3 py-2 rounded-lg flex items-center space-x-3 cursor-pointer ${
+                  activeSection === "shared" ? "bg-primary/10 text-primary" : "text-muted-foreground hover:bg-muted/50"
+                }`}
+                depth={3}
+                onClick={() => setActiveSection("shared")}
+              >
+                <Database className="h-4 w-4" />
+                <span className="text-sm font-medium">Dữ liệu tập thể</span>
+              </AnimatedCard>
+              
+              <AnimatedCard
+                className={`px-3 py-2 rounded-lg flex items-center space-x-3 cursor-pointer ${
+                  activeSection === "personal" ? "bg-primary/10 text-primary" : "text-muted-foreground hover:bg-muted/50"
+                }`}
+                depth={3}
+                onClick={() => setActiveSection("personal")}
+              >
+                <UserCircle className="h-4 w-4" />
+                <span className="text-sm font-medium">Dữ liệu cá nhân</span>
+              </AnimatedCard>
+              
+              <AnimatedCard
+                className={`px-3 py-2 rounded-lg flex items-center space-x-3 cursor-pointer ${
+                  activeSection === "department" ? "bg-primary/10 text-primary" : "text-muted-foreground hover:bg-muted/50"
+                }`}
+                depth={3}
+                onClick={() => setActiveSection("department")}
+              >
+                <Building className="h-4 w-4" />
+                <span className="text-sm font-medium">Dữ liệu phòng ban</span>
+              </AnimatedCard>
+            </div>
+          </div>
+          
+          {/* Điều hướng */}
           <div className="space-y-1">
+            <h3 className="text-xs font-medium uppercase text-muted-foreground tracking-wider px-2">Điều hướng</h3>
             {[
               { name: "Tất cả tệp", icon: FileText },
               { name: "Gần đây", icon: Clock },
@@ -178,7 +223,7 @@ const FileStorageInterface = () => {
               <AnimatedCard
                 key={index}
                 className={`px-3 py-2 rounded-lg flex items-center space-x-3 cursor-pointer ${
-                  item.name === "Tất cả tệp" 
+                  item.name === "Tất cả tệp" && activeSection === "shared" 
                     ? "bg-primary/10 text-primary" 
                     : "text-muted-foreground hover:bg-muted/50"
                 }`}
@@ -287,6 +332,29 @@ const FileStorageInterface = () => {
                 <List className="h-4 w-4" />
               </button>
             </AnimatedCard>
+          </div>
+        </div>
+        
+        {/* Tiêu đề kho dữ liệu */}
+        <div className="px-6 py-4 border-b border-border bg-muted/10">
+          <div className="flex items-center space-x-4">
+            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary/10 to-primary/30 flex items-center justify-center">
+              {activeSection === "shared" && <Database className="h-5 w-5 text-primary" />}
+              {activeSection === "personal" && <UserCircle className="h-5 w-5 text-primary" />}
+              {activeSection === "department" && <Building className="h-5 w-5 text-primary" />}
+            </div>
+            <div>
+              <h2 className="text-lg font-bold">
+                {activeSection === "shared" && "Kho dữ liệu tập thể"}
+                {activeSection === "personal" && "Kho dữ liệu cá nhân"}
+                {activeSection === "department" && "Kho dữ liệu phòng ban"}
+              </h2>
+              <p className="text-sm text-muted-foreground">
+                {activeSection === "shared" && "Dữ liệu được chia sẻ cho toàn bộ cơ quan"}
+                {activeSection === "personal" && "Dữ liệu cá nhân của bạn"}
+                {activeSection === "department" && "Dữ liệu được chia sẻ trong phòng ban"}
+              </p>
+            </div>
           </div>
         </div>
         

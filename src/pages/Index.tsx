@@ -1,9 +1,7 @@
-
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { FileText, Activity, ChevronRight, Calendar, Search, HelpCircle, ArrowRight } from "lucide-react";
 import SearchBar from "@/components/SearchBar";
-import ChatBot from "@/components/ChatBot";
 import AnimatedLayout from "@/components/AnimatedLayout";
 
 const Index = () => {
@@ -15,16 +13,16 @@ const Index = () => {
 
   return (
     <AnimatedLayout>
-      <div className="max-w-6xl mx-auto">
+      <div className="max-w-6xl mx-auto px-4">
         {/* Hero Section */}
-        <section className="mb-16 mt-8">
+        <section className="mb-16">
           <div className={`text-center space-y-6 transition-all duration-1000 transform ${
             isVisible ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"
           }`}>
-            <div className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-primary/10 text-primary mb-2">
+            <div className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-primary/10 text-primary mb-2 animate-pulse">
               <span>Phiên bản 1.0</span>
             </div>
-            <h1 className="text-4xl md:text-5xl font-bold tracking-tight">
+            <h1 className="text-4xl md:text-5xl font-bold tracking-tight bg-gradient-to-r from-primary via-primary/70 to-primary bg-clip-text text-transparent animate-gradient-x">
               Trợ lý ảo Dịch vụ công
             </h1>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
@@ -32,18 +30,18 @@ const Index = () => {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
               <Link
-                to="/documents"
-                className="px-6 py-3 rounded-xl bg-primary text-primary-foreground font-medium hover:bg-primary/90 transition-colors duration-300 flex items-center justify-center space-x-2"
+                to="/legal"
+                className="px-6 py-3 rounded-xl bg-primary text-primary-foreground font-medium hover:bg-primary/90 transition-all duration-300 flex items-center justify-center space-x-2 hover:scale-105 hover:shadow-md active:scale-95"
               >
                 <span>Tra cứu văn bản</span>
-                <ChevronRight className="h-4 w-4" />
+                <ChevronRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
               </Link>
               <Link
                 to="/workflows"
-                className="px-6 py-3 rounded-xl border border-border font-medium hover:bg-muted transition-colors duration-300 flex items-center justify-center space-x-2"
+                className="group px-6 py-3 rounded-xl border border-border font-medium hover:bg-muted transition-all duration-300 flex items-center justify-center space-x-2 hover:scale-105 hover:shadow-md hover:border-primary/30 active:scale-95"
               >
                 <span>Quy trình tự động</span>
-                <ChevronRight className="h-4 w-4" />
+                <ChevronRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
               </Link>
             </div>
           </div>
@@ -57,20 +55,22 @@ const Index = () => {
             <SearchBar placeholder="Tìm kiếm văn bản, thủ tục, quy trình..." />
             <div className="mt-6 grid grid-cols-2 md:grid-cols-4 gap-4">
               {[
-                { title: "Văn bản pháp luật", icon: FileText, color: "bg-blue-50 text-blue-500" },
-                { title: "Quy trình tự động", icon: Activity, color: "bg-violet-50 text-violet-500" },
-                { title: "Lịch làm việc", icon: Calendar, color: "bg-amber-50 text-amber-500" },
-                { title: "Hướng dẫn", icon: HelpCircle, color: "bg-green-50 text-green-500" },
+                { title: "Văn bản pháp luật", icon: FileText, color: "bg-blue-50 text-blue-500", link: "/legal" },
+                { title: "Quy trình tự động", icon: Activity, color: "bg-violet-50 text-violet-500", link: "/workflows" },
+                { title: "Kho lưu trữ", icon: Calendar, color: "bg-amber-50 text-amber-500", link: "/storage" },
+                { title: "Hướng dẫn", icon: HelpCircle, color: "bg-green-50 text-green-500", link: "/" },
               ].map((item, index) => (
-                <div
+                <Link
                   key={index}
-                  className="p-4 rounded-xl border border-border hover:border-primary hover:shadow-sm transition-all duration-300 flex flex-col items-center text-center"
+                  to={item.link}
+                  className="group p-4 rounded-xl border border-border hover:border-primary/50 transition-all duration-300 flex flex-col items-center text-center hover:bg-muted/30 hover:scale-105 hover:shadow-md active:scale-95"
+                  style={{ animationDelay: `${index * 100}ms` }}
                 >
-                  <div className={`w-10 h-10 rounded-full ${item.color} flex items-center justify-center mb-3`}>
-                    <item.icon className="h-5 w-5" />
+                  <div className={`w-10 h-10 rounded-full ${item.color} flex items-center justify-center mb-3 transition-transform duration-300 group-hover:scale-110`}>
+                    <item.icon className="h-5 w-5 transition-all duration-300 group-hover:rotate-12" />
                   </div>
-                  <h3 className="text-sm font-medium">{item.title}</h3>
-                </div>
+                  <h3 className="text-sm font-medium group-hover:text-primary transition-colors duration-300">{item.title}</h3>
+                </Link>
               ))}
             </div>
           </div>
@@ -83,9 +83,9 @@ const Index = () => {
           }`}>
             <div className="flex items-center justify-between mb-6">
               <h2 className="text-2xl font-bold">Dịch vụ thường dùng</h2>
-              <a href="#" className="text-primary flex items-center space-x-1 font-medium hover:underline">
+              <a href="#" className="group text-primary flex items-center space-x-1 font-medium hover:underline transition-all duration-300 hover:scale-105">
                 <span>Xem tất cả</span>
-                <ArrowRight className="h-4 w-4" />
+                <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
               </a>
             </div>
 
@@ -112,23 +112,24 @@ const Index = () => {
               ].map((service, index) => (
                 <div
                   key={index}
-                  className="group p-6 rounded-xl border border-border hover:border-primary hover:shadow-md transition-all duration-300"
+                  className="group p-6 rounded-xl border border-border hover:border-primary/50 transition-all duration-300 hover:bg-muted/20 hover:scale-105 hover:shadow-lg active:scale-95"
+                  style={{ animationDelay: `${index * 150}ms` }}
                 >
-                  <div className={`w-12 h-12 rounded-full ${service.color} flex items-center justify-center mb-4`}>
-                    <service.icon className="h-6 w-6" />
+                  <div className={`w-12 h-12 rounded-full ${service.color} flex items-center justify-center mb-4 transition-transform duration-300 group-hover:scale-110`}>
+                    <service.icon className="h-6 w-6 transition-all duration-300 group-hover:rotate-12" />
                   </div>
-                  <h3 className="text-lg font-semibold mb-2 group-hover:text-primary transition-colors duration-300">
+                  <h3 className="text-lg font-semibold mb-2 transition-colors duration-300 group-hover:text-primary">
                     {service.title}
                   </h3>
-                  <p className="text-muted-foreground mb-4">
+                  <p className="text-muted-foreground mb-4 transition-all duration-300 group-hover:text-foreground">
                     {service.description}
                   </p>
                   <a
                     href="#"
-                    className="inline-flex items-center text-primary font-medium hover:underline"
+                    className="inline-flex items-center text-primary font-medium hover:underline transition-all duration-300 group-hover:translate-x-1"
                   >
                     <span>Tìm hiểu thêm</span>
-                    <ChevronRight className="h-4 w-4 ml-1" />
+                    <ChevronRight className="h-4 w-4 ml-1 transition-transform duration-300 group-hover:translate-x-1" />
                   </a>
                 </div>
               ))}
@@ -162,19 +163,17 @@ const Index = () => {
               ].map((item, index) => (
                 <div
                   key={index}
-                  className="p-6 rounded-xl border border-border hover:border-primary hover:shadow-sm transition-all duration-300"
+                  className="group p-6 rounded-xl border border-border hover:border-primary/50 transition-all duration-300 hover:bg-muted/20 hover:scale-[1.02] hover:shadow-md"
+                  style={{ animationDelay: `${index * 200}ms` }}
                 >
-                  <h3 className="text-lg font-semibold mb-2">{item.question}</h3>
-                  <p className="text-muted-foreground">{item.answer}</p>
+                  <h3 className="text-lg font-semibold mb-2 transition-colors duration-300 group-hover:text-primary">{item.question}</h3>
+                  <p className="text-muted-foreground transition-all duration-300 group-hover:text-foreground">{item.answer}</p>
                 </div>
               ))}
             </div>
           </div>
         </section>
       </div>
-
-      {/* Chatbot */}
-      <ChatBot />
     </AnimatedLayout>
   );
 };
