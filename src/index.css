@@ -4,33 +4,33 @@
 
 @layer base {
   :root {
-    --background: 210 40% 98%;
-    --foreground: 222 47% 11%;
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
 
     --card: 0 0% 100%;
-    --card-foreground: 222 47% 11%;
+    --card-foreground: 222.2 84% 4.9%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 222 47% 11%;
+    --popover-foreground: 222.2 84% 4.9%;
 
-    --primary: 210 100% 50%;
+    --primary: 221.2 83.2% 53.3%;
     --primary-foreground: 210 40% 98%;
 
-    --secondary: 210 40% 96%;
-    --secondary-foreground: 222 47% 11%;
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
 
-    --muted: 210 40% 96%;
-    --muted-foreground: 215 16% 47%;
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
 
-    --accent: 210 40% 96%;
-    --accent-foreground: 222 47% 11%;
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
 
-    --destructive: 0 84% 60%;
+    --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
-    --ring: 222 47% 11%;
+    --ring: 221.2 83.2% 53.3%;
 
     --radius: 0.5rem;
     
@@ -48,17 +48,17 @@
   }
 
   .dark {
-    --background: 222 47% 11%;
+    --background: 222.2 84% 4.9%;
     --foreground: 210 40% 98%;
 
-    --card: 224 71% 4%;
+    --card: 222.2 84% 4.9%;
     --card-foreground: 210 40% 98%;
 
-    --popover: 224 71% 4%;
+    --popover: 222.2 84% 4.9%;
     --popover-foreground: 210 40% 98%;
 
-    --primary: 210 100% 50%;
-    --primary-foreground: 222 47% 11%;
+    --primary: 217.2 91.2% 59.8%;
+    --primary-foreground: 222.2 47.4% 11.2%;
 
     --secondary: 217.2 32.6% 17.5%;
     --secondary-foreground: 210 40% 98%;
@@ -74,7 +74,7 @@
 
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
+    --ring: 224.3 76.3% 48%;
     
     --primary-rgb: 0, 122, 255;
     --border-rgb: 200, 200, 200;
@@ -128,6 +128,102 @@
 
   .animate-on-scroll.active {
     @apply opacity-100 translate-y-0;
+  }
+  
+  /* Glass & 3D UI Components */
+  .glass-container {
+    @apply bg-background/30 backdrop-blur-md border shadow-sm;
+  }
+  
+  .glass-header {
+    @apply bg-background/10 backdrop-blur-xl;
+  }
+  
+  .glass-sidebar {
+    @apply bg-background/5 backdrop-blur-md;
+  }
+  
+  .button-3d {
+    @apply relative transition-all duration-200 will-change-transform;
+    transform-style: preserve-3d;
+  }
+  
+  .button-3d:hover {
+    @apply shadow-md;
+    transform: translateY(-2px) translateZ(5px);
+  }
+  
+  .button-3d:active {
+    @apply shadow-sm;
+    transform: translateY(0) translateZ(0);
+  }
+  
+  .icon-3d {
+    @apply transition-transform duration-300;
+    transform-style: preserve-3d;
+  }
+  
+  .button-3d:hover .icon-3d,
+  .hover-3d:hover .icon-3d {
+    transform: translateZ(10px);
+  }
+  
+  .hover-3d {
+    @apply transition-all duration-200;
+    transform-style: preserve-3d;
+  }
+  
+  .hover-3d:hover {
+    transform: translateZ(5px);
+  }
+  
+  .card-3d {
+    @apply transition-all duration-300;
+    transform-style: preserve-3d;
+    transform: perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1);
+  }
+  
+  .card-3d:hover {
+    transform: perspective(1000px) rotateX(2deg) rotateY(2deg) scale3d(1.02, 1.02, 1.02);
+    @apply shadow-lg;
+  }
+  
+  .avatar-3d {
+    @apply transition-transform duration-300;
+    transform-style: preserve-3d;
+  }
+  
+  .avatar-3d:hover {
+    transform: translateZ(10px) scale(1.1);
+  }
+  
+  .badge-3d {
+    @apply transition-all duration-200;
+    transform-style: preserve-3d;
+  }
+  
+  .badge-3d:hover {
+    transform: translateZ(5px) scale(1.05);
+  }
+  
+  .table-3d {
+    @apply border bg-background/20 backdrop-blur-sm;
+  }
+  
+  .table-header-3d {
+    @apply bg-background/30 backdrop-blur-md;
+  }
+  
+  .table-row-3d {
+    @apply border-b border-[rgba(255,255,255,0.1)] transition-colors;
+  }
+  
+  .table-row-3d:hover {
+    @apply bg-background/10;
+  }
+  
+  .table-cell-3d {
+    @apply py-4;
   }
 }
 
