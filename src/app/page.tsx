@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -25,7 +26,7 @@ import Settings from '../pages/admin/Settings';
 import Help from '../pages/admin/Help';
 import CustomReports from '../pages/reports/CustomReports';
 import Favorites from '../pages/favorites/Favorites';
-import UserProfile from '../pages/profile/UserProfile';
+import { UserProfile } from '../pages/UserProfile';
 
 const queryClient = new QueryClient();
 

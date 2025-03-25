@@ -10,17 +10,17 @@ import RootLayout from "./components/RootLayout";
 import Index from "./pages/Index";
 import Documents from "./pages/Documents";
 import { Dashboard } from "./pages/Dashboard";
-import { Reports } from "./pages/Reports";
+import Reports from "./pages/Reports";
 import { ActionHistory } from "./pages/ActionHistory";
 import { Settings } from "./pages/Settings";
 import { UserProfile } from "./pages/UserProfile";
 import { NotFound } from "./pages/NotFound";
 
 // Storage Pages
-import { CommonStorage } from "./pages/storage/CommonStorage";
-import { DepartmentDetails } from "./pages/storage/DepartmentDetails";
-import { DepartmentDocuments } from "./pages/storage/DepartmentDocuments";
-import { DepartmentMembers } from "./pages/storage/DepartmentMembers";
+import CommonStorage from "./pages/storage/CommonStorage";
+import DepartmentDetails from "./pages/storage/DepartmentDetails";
+import DepartmentDocuments from "./pages/storage/DepartmentDocuments";
+import DepartmentMembers from "./pages/storage/DepartmentMembers";
 import StorageLayout from "./pages/storage/StorageLayout";
 import StorageDashboard from "./pages/storage/StorageDashboard";
 import PersonalStorage from "./pages/storage/PersonalStorage";
@@ -28,10 +28,10 @@ import TeamStorage from "./pages/storage/TeamStorage";
 import DepartmentStorage from "./pages/storage/DepartmentStorage";
 
 // Admin Pages
-import { UserManagement } from "./pages/admin/UserManagement";
-import { CategoryManagement } from "./pages/admin/CategoryManagement";
-import { AuditLogs } from "./pages/admin/AuditLogs";
-import { Help } from "./pages/admin/Help";
+import UserManagement from "./pages/admin/UserManagement";
+import CategoryManagement from "./pages/admin/CategoryManagement";
+import AuditLogs from "./pages/admin/AuditLogs";
+import Help from "./pages/admin/Help";
 import NotificationManagement from "./pages/admin/NotificationManagement";
 
 // Thủ tục hành chính

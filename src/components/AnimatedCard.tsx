@@ -1,73 +1,84 @@
-import { useState, useRef, ReactNode, useEffect } from "react";
 
-interface AnimatedCardProps {
-  children: ReactNode;
+import React, { useState, useRef, useEffect } from 'react';
+import { cn } from "@/lib/utils";
+
+export interface AnimatedCardProps {
+  children: React.ReactNode;
   className?: string;
   depth?: number;
   highlight?: boolean;
+  onClick?: () => void;
 }
 
-const AnimatedCard = ({ 
-  children, 
-  className = "", 
-  depth = 5,
-  highlight = false 
-}: AnimatedCardProps) => {
-  const [rotateX, setRotateX] = useState(0);
-  const [rotateY, setRotateY] = useState(0);
-  const [mouseOver, setMouseOver] = useState(false);
+const AnimatedCard: React.FC<AnimatedCardProps> = ({
+  children,
+  className,
+  depth = 3,
+  highlight = false,
+  onClick
+}) => {
+  const [rotation, setRotation] = useState({ x: 0, y: 0 });
+  const [isHovered, setIsHovered] = useState(false);
   const cardRef = useRef<HTMLDivElement>(null);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!cardRef.current) return;
     
     const rect = cardRef.current.getBoundingClientRect();
-    const centerX = rect.left + rect.width / 2;
-    const centerY = rect.top + rect.height / 2;
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
     
-    const mouseX = e.clientX;
-    const mouseY = e.clientY;
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
     
-    // Tính toán góc xoay dựa trên vị trí chuột tương đối với tâm card
-    const rotateYValue = ((mouseX - centerX) / (rect.width / 2)) * depth;
-    const rotateXValue = ((centerY - mouseY) / (rect.height / 2)) * depth;
+    const rotateX = (y - centerY) / (rect.height / 2) * depth;
+    const rotateY = (centerX - x) / (rect.width / 2) * depth;
     
-    setRotateX(rotateXValue);
-    setRotateY(rotateYValue);
+    setRotation({ x: rotateX, y: rotateY });
   };
 
   const handleMouseEnter = () => {
-    setMouseOver(true);
+    setIsHovered(true);
   };
 
   const handleMouseLeave = () => {
-    setMouseOver(false);
-    setRotateX(0);
-    setRotateY(0);
+    setIsHovered(false);
+    setRotation({ x: 0, y: 0 });
+  };
+
+  const handleClick = () => {
+    if (onClick) {
+      onClick();
+    }
+  };
+
+  const style = {
+    transform: isHovered
+      ? `perspective(1000px) rotateX(${rotation.x}deg) rotateY(${rotation.y}deg) scale3d(1.02, 1.02, 1.02)`
+      : 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)',
+    transition: isHovered
+      ? 'transform 0.1s ease'
+      : 'transform 0.3s ease',
+    boxShadow: isHovered
+      ? `0 10px 25px -5px rgba(0, 0, 0, 0.1), 
+         0 5px 10px -5px rgba(0, 0, 0, 0.04),
+         0 0 ${highlight ? '15px' : '5px'} rgba(var(--primary), ${highlight ? '0.35' : '0.1'})`
+      : '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)'
   };
 
   return (
     <div
       ref={cardRef}
-      className={`transition-all duration-200 ease-out ${className}`}
-      style={{
-        transform: mouseOver 
-          ? `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)` 
-          : "perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)",
-        boxShadow: mouseOver 
-          ? `0 10px 30px -10px rgba(0, 0, 0, 0.2), 
-             ${rotateY / 5}px ${rotateX / -5}px 20px rgba(0, 0, 0, 0.1), 
-             inset 0 0 0 1px ${highlight ? "rgba(var(--primary-rgb), 0.4)" : "rgba(var(--border-rgb), 0.15)"},
-             inset 0 -20px 30px -20px rgba(var(--border-rgb), 0.15)`
-          : "0 4px 15px -3px rgba(0, 0, 0, 0.1), inset 0 0 0 1px rgba(var(--border-rgb), 0.05)",
-      }}
+      className={cn("bg-card rounded-lg border border-border overflow-hidden transition-all", className)}
+      style={style}
       onMouseMove={handleMouseMove}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
+      onClick={handleClick}
     >
       {children}
     </div>
   );
 };
 
-export default AnimatedCard; 
+export default AnimatedCard;

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Search, Filter, BookOpen, Download, Share2, Eye, Scale, Calendar, ChevronRight, Calendar as CalendarIcon, FilePlus, ArrowUpDown, BookOpenCheck, ChevronDown } from "lucide-react";
+import { Search, Filter, BookOpen, Download, Share2, Eye, Scale, Calendar, ChevronRight, Calendar as CalendarIcon, FilePlus, ArrowUpDown, BookOpenCheck, ChevronDown, ChevronUp, X } from "lucide-react";
 import AnimatedCard from "./AnimatedCard";
 
 interface LegalDocument {
@@ -22,7 +22,6 @@ const LegalDocumentSearch = () => {
   const [activeFilter, setActiveFilter] = useState<string | null>(null);
   const [isFilterExpanded, setIsFilterExpanded] = useState(false);
   
-  // Dữ liệu mẫu cho văn bản pháp luật
   const legalDocuments: LegalDocument[] = [
     {
       id: "1",
@@ -87,14 +86,12 @@ const LegalDocumentSearch = () => {
     },
   ];
 
-  // Lọc văn bản theo từ khóa tìm kiếm
   const filteredDocuments = legalDocuments.filter(doc => 
     doc.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
     doc.number.toLowerCase().includes(searchQuery.toLowerCase()) ||
     doc.summary.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  // Các loại văn bản cho bộ lọc
   const documentTypes = [
     { id: "law", label: "Luật", count: 1 },
     { id: "decree", label: "Nghị định", count: 1 },
@@ -102,7 +99,6 @@ const LegalDocumentSearch = () => {
     { id: "decision", label: "Quyết định", count: 1 },
   ];
 
-  // Các cơ quan ban hành cho bộ lọc
   const issuingAuthorities = [
     { id: "congress", label: "Quốc hội", count: 1 },
     { id: "government", label: "Chính phủ", count: 1 },
@@ -110,7 +106,6 @@ const LegalDocumentSearch = () => {
     { id: "province", label: "UBND tỉnh", count: 1 },
   ];
 
-  // Các năm ban hành cho bộ lọc
   const years = [
     { id: "2020", label: "2020", count: 1 },
     { id: "2015", label: "2015", count: 1 },
@@ -119,7 +114,6 @@ const LegalDocumentSearch = () => {
     { id: "2007", label: "2007", count: 1 },
   ];
 
-  // Xác định màu cho trạng thái văn bản
   const getStatusColor = (status: string) => {
     switch (status) {
       case "active":
@@ -133,7 +127,6 @@ const LegalDocumentSearch = () => {
     }
   };
 
-  // Xác định trạng thái văn bản bằng tiếng Việt
   const getStatusText = (status: string) => {
     switch (status) {
       case "active":
@@ -147,7 +140,6 @@ const LegalDocumentSearch = () => {
     }
   };
 
-  // Định dạng ngày tháng
   const formatDate = (date: Date) => {
     return date.toLocaleDateString("vi-VN", {
       day: "2-digit",
@@ -158,7 +150,6 @@ const LegalDocumentSearch = () => {
 
   return (
     <div className="max-w-7xl mx-auto px-4 md:px-6 py-8">
-      {/* Tiêu đề và phần giới thiệu */}
       <div className="mb-8 text-center">
         <h1 className="text-3xl font-bold mb-4">Thư viện Văn bản pháp luật</h1>
         <p className="text-muted-foreground max-w-3xl mx-auto">
@@ -166,7 +157,6 @@ const LegalDocumentSearch = () => {
         </p>
       </div>
 
-      {/* Khung tìm kiếm */}
       <AnimatedCard 
         className="mb-8 p-6 rounded-2xl bg-card"
         depth={4}
@@ -196,10 +186,8 @@ const LegalDocumentSearch = () => {
           </button>
         </div>
 
-        {/* Bộ lọc mở rộng */}
         {isFilterExpanded && (
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6 pt-6 border-t border-border">
-            {/* Loại văn bản */}
             <div>
               <h3 className="font-medium mb-3 text-sm">Loại văn bản</h3>
               <div className="space-y-2">
@@ -220,7 +208,6 @@ const LegalDocumentSearch = () => {
               </div>
             </div>
 
-            {/* Cơ quan ban hành */}
             <div>
               <h3 className="font-medium mb-3 text-sm">Cơ quan ban hành</h3>
               <div className="space-y-2">
@@ -241,7 +228,6 @@ const LegalDocumentSearch = () => {
               </div>
             </div>
 
-            {/* Năm ban hành */}
             <div>
               <h3 className="font-medium mb-3 text-sm">Năm ban hành</h3>
               <div className="space-y-2">
@@ -265,7 +251,6 @@ const LegalDocumentSearch = () => {
         )}
       </AnimatedCard>
 
-      {/* Kết quả tìm kiếm */}
       <div className="mb-4 flex items-center justify-between">
         <h2 className="text-lg font-medium">Kết quả tìm kiếm ({filteredDocuments.length})</h2>
         <div className="flex items-center">
@@ -277,7 +262,6 @@ const LegalDocumentSearch = () => {
         </div>
       </div>
 
-      {/* Danh sách văn bản */}
       <div className="space-y-4 mb-8">
         {filteredDocuments.length > 0 ? (
           filteredDocuments.map((doc) => (
@@ -285,7 +269,6 @@ const LegalDocumentSearch = () => {
               key={doc.id}
               className="p-6 rounded-xl bg-card border border-border hover:border-primary/50 cursor-pointer"
               depth={5}
-              onClick={() => setSelectedDocument(doc)}
             >
               <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
                 <div className="flex-1">
@@ -338,7 +321,6 @@ const LegalDocumentSearch = () => {
                     className="text-xs py-1.5 px-3 rounded-full bg-primary/10 text-primary hover:bg-primary/20 flex items-center"
                     onClick={(e) => {
                       e.stopPropagation();
-                      // Logic xem chi tiết
                     }}
                   >
                     <Eye className="h-3 w-3 mr-1.5" />
@@ -349,7 +331,6 @@ const LegalDocumentSearch = () => {
                     className="text-xs py-1.5 px-3 rounded-full bg-muted hover:bg-muted/80 flex items-center"
                     onClick={(e) => {
                       e.stopPropagation();
-                      // Logic tải xuống
                     }}
                   >
                     <Download className="h-3 w-3 mr-1.5" />
@@ -370,7 +351,6 @@ const LegalDocumentSearch = () => {
         )}
       </div>
 
-      {/* Phân trang */}
       <div className="flex justify-center">
         <nav className="flex items-center space-x-1">
           {[1, 2, 3, 4, 5].map((page) => (
@@ -392,7 +372,6 @@ const LegalDocumentSearch = () => {
         </nav>
       </div>
 
-      {/* Modal xem chi tiết văn bản */}
       {selectedDocument && (
         <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
           <AnimatedCard
@@ -565,4 +544,4 @@ const LegalDocumentSearch = () => {
   );
 };
 
-export default LegalDocumentSearch; 
+export default LegalDocumentSearch;

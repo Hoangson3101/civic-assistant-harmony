@@ -1,12 +1,16 @@
 import { useState } from "react";
 import { ChevronRight, Heart, Download, Printer, Share2, FileText, Calendar, Building, Tag, MessageSquare, Star } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useParams } from "react-router-dom";
 
 interface DocumentDetailProps {
-  id: string;
+  id?: string;
 }
 
-const DocumentDetail = ({ id }: DocumentDetailProps) => {
+const DocumentDetail = ({ id: propId }: DocumentDetailProps = {}) => {
+  const { id: urlId } = useParams();
+  const id = propId || urlId || "1"; // Fallback to "1" if neither prop nor URL param is provided
+  
   const [activeTab, setActiveTab] = useState<"content" | "history" | "attachments">("content");
   const [rating, setRating] = useState<number>(0);
 
@@ -271,4 +275,4 @@ const DocumentDetail = ({ id }: DocumentDetailProps) => {
   );
 };
 
-export default DocumentDetail; 
+export default DocumentDetail;
