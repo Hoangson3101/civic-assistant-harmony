@@ -1,5 +1,6 @@
-import DocumentDashboard from "@/pages/documents/DocumentDashboard";
+
+import { Navigate } from "react-router-dom";
 
 export default function DocumentsPage() {
-  return <DocumentDashboard />;
-} 
+  return <Navigate to="/documents" replace />;
+}
